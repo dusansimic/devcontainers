@@ -1,10 +1,10 @@
-name: Build Python image
+name: Build TeXLive image
 
 on:
   push:
     paths:
-      - src/python
-      - .github/workflows/build-python.yml
+      - src/texlive
+      - .github/workflows/build-texlive.yml
       - .github/workflows/reusable-build.yml
   workflow_dispatch:
 
@@ -15,6 +15,11 @@ jobs:
       contents: read
       packages: write
     secrets: inherit
+    strategy:
+      matrix:
+        version:
+          - 2023
+          - 2024
     with:
-      image: python
-      tag: "3"
+      image: texlive
+      tag: ${{ matrix.version }}
