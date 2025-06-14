@@ -30,7 +30,7 @@ jobs:
       - uses: docker/metadata-action@v5
         id: tags
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}/${{ inputs.image }}
           tags: |
             type=raw,value=${{ env.IMAGE_TAG }}
       - name: Image metadata
@@ -38,10 +38,10 @@ jobs:
         id: meta
         with:
           labels: |
-            me.dusansimic.devcontainers.${{ env.IMAGE_NAME }}.version=${{ env.IMAGE_TAG }}
+            me.dusansimic.devcontainers.${{ inputs.image }}.version=${{ inputs.tag }}
       - uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./src/${{ inputs.image }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ github.ref_type == 'tag' && steps.tags.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
