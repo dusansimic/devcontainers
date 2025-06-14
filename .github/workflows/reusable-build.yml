@@ -9,6 +9,9 @@ on:
       tag:
         required: true
         type: string
+      build-args:
+        required: false
+        type: string
 
 env:
   REGISTRY: ghcr.io
@@ -46,3 +49,4 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.tags.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: ${{ inputs.build-args }}

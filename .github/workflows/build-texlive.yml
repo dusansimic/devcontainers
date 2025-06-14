@@ -23,3 +23,5 @@ jobs:
     with:
       image: texlive
       tag: ${{ matrix.version }}
+      build-args: |
+        TEXLIVE_VERSION=${{ matrix.version }}
