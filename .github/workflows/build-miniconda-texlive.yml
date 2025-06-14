@@ -1,0 +1,27 @@
+name: Build TeXLive image
+
+on:
+  push:
+    paths:
+      - src/miniconda-texlive
+      - .github/workflows/build-miniconda-texlive.yml
+      - .github/workflows/reusable-build.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/reusable-build.yml
+    permissions:
+      contents: read
+      packages: write
+    secrets: inherit
+    strategy:
+      matrix:
+        version:
+          - 2023
+          - 2024
+    with:
+      image: miniconda-texlive
+      tag: ${{ matrix.version }}
+      build-args: |
+        TEXLIVE_VERSION=${{ matrix.version }}
