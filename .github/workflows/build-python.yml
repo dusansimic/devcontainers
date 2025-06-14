@@ -1,0 +1,12 @@
+name: Build Python image
+
+on:
+  push:
+
+jobs:
+  build:
+    uses: ./.github/workflows/reusable-build.yml
+    secrets: inherit
+    with:
+      image: python
+      tag: "3"
