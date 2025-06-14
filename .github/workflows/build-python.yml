@@ -9,7 +9,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      id-token: write
     secrets: inherit
     with:
       image: python
