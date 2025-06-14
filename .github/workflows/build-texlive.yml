@@ -3,7 +3,7 @@ name: Build TeXLive image
 on:
   push:
     paths:
-      - src/texlive
+      - src/texlive/**
       - .github/workflows/build-texlive.yml
       - .github/workflows/reusable-build.yml
   workflow_dispatch:
