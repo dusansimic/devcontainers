@@ -13,8 +13,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_REPOSITORY: ${{ github.repository }}
-  IMAGE_NAME: ${{ inputs.image }}
-  IMAGE_TAG: ${{ inputs.tag }}
 
 jobs:
   build:
@@ -36,7 +34,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}/${{ inputs.image }}
           tags: |
-            type=raw,value=${{ env.IMAGE_TAG }}
+            type=raw,value=${{ inputs.tag }}
       - name: Image metadata
         uses: docker/metadata-action@v5
         id: meta
@@ -47,5 +45,5 @@ jobs:
         with:
           context: ./src/${{ inputs.image }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ github.ref_type == 'tag' && steps.tags.outputs.tags }}
+          tags: ${{ steps.tags.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
